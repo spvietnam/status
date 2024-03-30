@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>MC STATUS</title>
+
+    <style>
+        body {
+            font-family: 'Copperplate', monospace;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+            direction: ltr; /* Chữ từ trái sang phải */
+        }
+
+        body.dark-mode {
+            background-color: #131313;
+            color: #fff;
+        }
+
+        h1 {
+            padding: 20px;
+            border-radius: 16px;
+            background: #131313;
+            width: 80%;
+            margin: 20px auto; /* Căn giữa */
+        }
+
+        p {
+            margin-top: 20px;
+            border-radius: 16px;
+            padding: 20px;
+            background: #303030;
+            width: 80%;
+            margin: 20px auto; /* Căn giữa */
+            color: #ffffff;
+        }
+  </style>
+    <h1><a href="index.html" class="button-link">
+        <button type="button" class="styled-button" onclick="buttonClick()"><div class="arrow-left"></div></button></a> Ⅰ <div class="logo-dot"></div> MC Stats</h1>
+    <div id="serverStatus"></div>
+
+    <script>
+        const serverStatusElement = document.getElementById('serverStatus');
+        const servers = [
+            { ip: 'mc.spvn.vn', port: '25565' },
+          // Thêm khác
+            // { ip: 'another-server-ip', port: 'another-server-port' },
+            // ...
+        ];
+
+        function checkServerStatus() {
+            serverStatusElement.innerHTML = ''; // Xóa nội dung trước khi cập nhật
+            servers.forEach(server => {
+                fetch(`https://api.mcsrvstat.us/3/${server.ip}:${server.port}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const serverInfo = document.createElement('p');
+
+                        if (data.online) {
+                            const playersOnline = data.players.online;
+                            const maxPlayers = data.players.max;
+                            const version = data.version;
+                            const hostname = data.hostname;
+                            const port = data.port;
+                            const gamemode = data.gametype;
+
+                            serverInfo.innerHTML = `
+
+<strong>Máy chủ</strong>: ${hostname}:${port}<br>
+                                <strong>Trạng thái:</strong> <div class="glowing-dot"></div> </div>Online<br>
+                                <strong>Người chơi:</strong> ${playersOnline}/${maxPlayers}<br>
+                                <strong>Phiên bản:</strong> ${version}<br>`;
+                        } else {
+                            serverInfo.innerText = `${server.ip}:${server.port} | ❗ SERVER OFFLINE`;
+                        }
+
+                        serverStatusElement.appendChild(serverInfo);
+                    })
+                    .catch(error => {
+                        console.error(`Lỗi k.tra trạng thái máy chủ cho ${server.ip}:${server.port}:`, error);
+                        const serverInfo = document.createElement('p');
+                        serverInfo.innerText = `Lỗi k.tra trạng thái máy chủ cho ${server.ip}:${server.port}`;
+                        serverStatusElement.appendChild(serverInfo);
+                    });
+            });
+        }
+
+        checkServerStatus();
+        setInterval(checkServerStatus, 10000);
+    </script>
+
+    <script>
+        const body = document.body;
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (prefersDarkMode) {
+            body.classList.add('dark-mode');
+        }
+
+        function toggleDarkMode() {
+            body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+  <h5>API: api.mcsrvstat.us | By K.Quan<br>____________</h5>
+</body>
+  </html>
+</html>
