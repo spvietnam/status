@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>SP Status</title>
+    <title>MC STATUS</title>
 
     <style>
         body {
@@ -69,13 +69,15 @@
                             const gamemode = data.gametype;
 
                             serverInfo.innerHTML = `
-                                <strong>SPVietnam:</strong> Survival Multiplayer<br>
-                                <strong>IP Server:</strong> ${hostname}:${port}<br>
-                                <strong>Trạng thái:</strong> <div class="glowing-dot"></div> </div>Hoạt động<br>
+
+<strong>SPVietnam</strong>: Survival Multiplayer<br>
+                                <strong>IP Server</strong>: ${hostname}:${port}<br>
+                                <strong>Trạng thái:</strong> <div class="glowing-dot"></div> </div>Online<br>
                                 <strong>Người chơi:</strong> ${playersOnline}/${maxPlayers}<br>
                                 <strong>Phiên bản gốc:</strong> ${version}<br>`;
+                                <strong>Hỗ trợ phiên bản:</strong> MCPC/MCPE<br>
                         } else {
-                            serverInfo.innerText = `${server.ip}:${server.port} | 🔴 Server không h.động`;
+                            serverInfo.innerText = `${server.ip}:${server.port} | ❗ SERVER OFFLINE`;
                         }
 
                         serverStatusElement.appendChild(serverInfo);
@@ -90,7 +92,7 @@
         }
 
         checkServerStatus();
-        setInterval(checkServerStatus, 10);
+        setInterval(checkServerStatus, 10000);
     </script>
 
     <script>
