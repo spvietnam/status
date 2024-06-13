@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>MC STATUS</title>
+    <title>SP Status</title>
 
     <style>
         body {
@@ -69,13 +69,14 @@
                             const gamemode = data.gametype;
 
                             serverInfo.innerHTML = `
-
-<strong>Máy chủ</strong>: ${hostname}:${port}<br>
-                                <strong>Trạng thái:</strong> <div class="glowing-dot"></div> </div>Online<br>
+                                <strong>SPVietnam SMP</strong><br>
+                                <strong>IP Server</strong>: ${hostname}:${port}<br>
+                                <strong>Trạng thái:</strong> <div class="glowing-dot"></div> </div>Hoạt động<br>
                                 <strong>Người chơi:</strong> ${playersOnline}/${maxPlayers}<br>
-                                <strong>Phiên bản:</strong> ${version}<br>`;
+                                <strong>Phiên bản gốc:</strong> ${version}<br>
+                                <strong>Hỗ trợ phiên bản:</strong> MCPC/MCPE<br>`;
                         } else {
-                            serverInfo.innerText = `${server.ip}:${server.port} | ❗ SERVER OFFLINE`;
+                            serverInfo.innerText = `${server.ip}:${server.port} | 🔴 Server không h.động`;
                         }
 
                         serverStatusElement.appendChild(serverInfo);
@@ -90,7 +91,7 @@
         }
 
         checkServerStatus();
-        setInterval(checkServerStatus, 10000);
+        setInterval(checkServerStatus, 10);
     </script>
 
     <script>
